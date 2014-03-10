@@ -1,0 +1,9 @@
+syntax: glob
+*.swp
+*.pyc
+build/
+.gradle/
+.idea/workspace.xml
+.idea/tasks.xml
+local.properties
+*~*
