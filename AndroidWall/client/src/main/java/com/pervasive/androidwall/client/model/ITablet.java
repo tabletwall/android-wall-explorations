@@ -1,4 +1,4 @@
-package model;
+package com.pervasive.androidwall.client.model;
 
 import android.graphics.Rect;
 

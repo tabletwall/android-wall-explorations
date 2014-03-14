@@ -1,19 +1,30 @@
 package com.pervasive.androidwall.client;
 
+import android.graphics.Rect;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.pervasive.androidwall.client.model.CTablet;
+import com.pervasive.androidwall.client.view.TabletView;
+
 
 public class MainActivity extends ActionBarActivity {
+
+    private TabletView tabletView;
+    private CTablet tablet;
+    private final Rect defaultRect = new Rect(0, 0, 50, 50);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
 
+        tablet = new CTablet(0, defaultRect);
+        tabletView = (TabletView) findViewById(R.id.tabletview);
+        tabletView.setTablet(tablet);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
