@@ -24,7 +24,7 @@ public class TabletView extends View {
     public TabletView(Context context) {
         super(context);
         mainActivity = (MainActivity) context;
-        setFocusable(true); // TODO do we need this?
+        setFocusable(true);
         setFocusableInTouchMode(true);
         tabletScreenRectPaint = new Paint();
         tabletScreenRectPaint.setColor(Color.TRANSPARENT);
@@ -33,7 +33,7 @@ public class TabletView extends View {
     public TabletView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mainActivity = (MainActivity) context;
-        setFocusable(true); // TODO do we need this?
+        setFocusable(true);
         setFocusableInTouchMode(true);
         tabletScreenRectPaint = new Paint();
         tabletScreenRectPaint.setColor(Color.TRANSPARENT);
@@ -42,7 +42,7 @@ public class TabletView extends View {
     public TabletView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mainActivity = (MainActivity) context;
-        setFocusable(true); // TODO do we need this?
+        setFocusable(true);
         setFocusableInTouchMode(true);
         tabletScreenRectPaint = new Paint();
         tabletScreenRectPaint.setColor(Color.TRANSPARENT);

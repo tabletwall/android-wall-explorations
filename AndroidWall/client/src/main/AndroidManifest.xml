@@ -7,6 +7,9 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <uses-sdk
+            android:minSdkVersion="11">
+        </uses-sdk>
         <activity
             android:name="com.pervasive.androidwall.client.MainActivity"
             android:label="@string/app_name" >
