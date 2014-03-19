@@ -1,7 +1,7 @@
 Android Wall
 ==
 
-This project is being developed by a team of computer science students at Loyola University for Pervasive Systems Research Seminar. To learn more, please reference our [Trello board] (https://trello.com/b/atKDaeNx/library-of-research-resources)
+This project is being developed by a team of computer science students at Loyola University for Pervasive Systems Research Seminar. To learn more, please reference our [Trello board](https://trello.com/b/atKDaeNx/library-of-research-resources)
 
 Project Description
 ===
