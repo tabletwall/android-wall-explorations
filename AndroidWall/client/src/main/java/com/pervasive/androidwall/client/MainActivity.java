@@ -26,7 +26,7 @@ public class MainActivity extends ActionBarActivity {
 
     private TabletView tabletView;
     private CTablet tablet;
-    private final Rect defaultRect = new Rect(0, 0, 50, 50);
+    private final Rect defaultTabletRect = new Rect(0, 0, 0, 0);
 
     ImageView ima;
     private static final String IMAGEVIEW_TAG = "Android Logo";
@@ -38,10 +38,13 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tablet = new CTablet(0, defaultRect);
+        // Setup model
+        tablet = new CTablet(0, defaultTabletRect);
+        // Plugin model to view
         tabletView = (TabletView) findViewById(R.id.tabletview);
         tabletView.setTablet(tablet);
 
+        // @TODO testing drag and drop
         ima = (ImageView) findViewById(R.id.iv_logo);
         // Sets the tag
         ima.setTag(IMAGEVIEW_TAG);
@@ -54,12 +57,12 @@ public class MainActivity extends ActionBarActivity {
                 ClipData dragData = new ClipData(view.getTag().toString(), mimeTypes, item);
 
                 // Instantiates the drag shadow builder.
-                View.DragShadowBuilder myShadow = new MyDragShadowBuilder(ima);
+                View.DragShadowBuilder myShadow = new View.DragShadowBuilder(ima);
 
                 // Starts the drag
                 view.startDrag(dragData,  // the data to be dragged
                     myShadow,  // the drag shadow builder
-                    null,      // no need to use local data
+                    view,      // no need to use local data
                     0          // flags (not currently used, set to 0)
                 );
             return true;
@@ -73,6 +76,7 @@ public class MainActivity extends ActionBarActivity {
                 {
                     case DragEvent.ACTION_DRAG_STARTED:
                         layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
+                        System.out.println("Layout params: " + layoutParams.topMargin + " " + layoutParams.leftMargin);
                         Log.d(msg, "Action is DragEvent.ACTION_DRAG_STARTED");
                         // Do nothing
                         break;
@@ -88,7 +92,7 @@ public class MainActivity extends ActionBarActivity {
                         layoutParams.leftMargin = x_cord;
                         layoutParams.topMargin = y_cord;
                         view.setLayoutParams(layoutParams);
-                        Log.d(msg, "Relative Layout:" + layoutParams.leftMargin + " " + layoutParams.topMargin);
+                        Log.d(msg, "Relative Layout:" + view.getHeight() + " " + view.getWidth());
                         Log.d(msg, "Drag coords:" + x_cord + " " + y_cord);
                         break;
                     case DragEvent.ACTION_DRAG_LOCATION  :
@@ -102,6 +106,8 @@ public class MainActivity extends ActionBarActivity {
                         break;
                     case DragEvent.ACTION_DROP:
                         Log.d(msg, "ACTION_DROP event");
+                        ClipData clipData = dragEvent.getClipData();
+                        System.out.println("\n\nCLIP DATA: " + clipData.toString());
                         // Do nothing
                         break;
                     default: break;
