@@ -15,5 +15,5 @@ Some of our ideas for this project are as follows:
 
 Stay tuned toward our wiki for this page for more documentation. In the meantime, here are some useful links:
 
-* https://docs.google.com/document/d/1RUsOLq4yXP5gqQknYvdIGNuYdz6TgpcpLYQWMDCy_kM/edit?usp=sharing
-* https://trello.com/b/LTiROgfd/android-tablet-wall-project
+* [Environment Setup](https://docs.google.com/document/d/1RUsOLq4yXP5gqQknYvdIGNuYdz6TgpcpLYQWMDCy_kM/edit?usp=sharing)
+* [Android Wall Trello](https://trello.com/b/LTiROgfd/android-tablet-wall-project)
