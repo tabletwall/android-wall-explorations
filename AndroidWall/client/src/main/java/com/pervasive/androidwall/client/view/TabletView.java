@@ -1,15 +1,13 @@
 package com.pervasive.androidwall.client.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.pervasive.androidwall.client.MainActivity;
+import com.pervasive.androidwall.client.controller.MainActivity;
 import com.pervasive.androidwall.client.model.CTablet;
 
 /**
