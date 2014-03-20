@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.Menu;
@@ -28,7 +29,7 @@ public class MainActivity extends ActionBarActivity {
 
     private TabletView tabletView;
     private CTablet tablet;
-    private final Rect defaultTabletRect = new Rect(0, 0, 0, 0);
+    private Rect defaultTabletRect;
 
     View ima;
     private static final String IMAGEVIEW_TAG = "Android Logo";
@@ -41,12 +42,14 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         // Setup model
+        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+        defaultTabletRect = new Rect(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels);
         tablet = new CTablet(0, defaultTabletRect);
         // Plugin model to view
         tabletView = (TabletView) findViewById(R.id.tabletview);
         tabletView.setTablet(tablet);
 
-        // @TODO testing drag and drop
+        // Note: to be changed later with other objects
         ima = (ImageView) findViewById(R.id.iv_logo);
         // Sets the tag
         ima.setTag(IMAGEVIEW_TAG);
@@ -76,31 +79,10 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void setListeners() {
-        ima.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                ClipData.Item item = new ClipData.Item((CharSequence)view.getTag());
-
-                String[] mimeTypes = {ClipDescription.MIMETYPE_TEXT_PLAIN};
-                ClipData dragData = new ClipData(view.getTag().toString(), mimeTypes, item);
-
-                // Instantiates the drag shadow builder.
-                View.DragShadowBuilder myShadow = new View.DragShadowBuilder(ima);
-
-                // Starts the drag
-                view.startDrag(dragData,  // the data to be dragged
-                        myShadow,  // the drag shadow builder
-                        view,      // no need to use local data
-                        0          // flags (not currently used, set to 0)
-                );
-                return true;
-            }
-        });
-
-        // Set drag listener for Image View
-        // @TODO I don't think the appropriate views are being hooked up here...
-        ima.setOnDragListener(new DefaultImageViewDraggable(this));
+        // Old implementation commented
+//        ima.setOnDragListener(new DefaultImageViewDraggable(this));
 //        ima.setOnDragListener(new DefaultTabletViewDraggable(this));
 //        tabletView.setOnDragListener(new DefaultTabletViewDraggable(this));
+        ima.setOnTouchListener(new DefaultImageViewTouchHandler(this, tabletView));
     }
 }
