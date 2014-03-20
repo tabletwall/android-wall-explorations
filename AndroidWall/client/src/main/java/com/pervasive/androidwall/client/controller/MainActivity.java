@@ -90,7 +90,7 @@ public class MainActivity extends ActionBarActivity {
                 // Starts the drag
                 view.startDrag(dragData,  // the data to be dragged
                         myShadow,  // the drag shadow builder
-                        null,      // no need to use local data
+                        view,      // no need to use local data
                         0          // flags (not currently used, set to 0)
                 );
                 return true;
@@ -98,6 +98,9 @@ public class MainActivity extends ActionBarActivity {
         });
 
         // Set drag listener for Image View
+        // @TODO I don't think the appropriate views are being hooked up here...
         ima.setOnDragListener(new DefaultImageViewDraggable(this));
+//        ima.setOnDragListener(new DefaultTabletViewDraggable(this));
+//        tabletView.setOnDragListener(new DefaultTabletViewDraggable(this));
     }
 }
