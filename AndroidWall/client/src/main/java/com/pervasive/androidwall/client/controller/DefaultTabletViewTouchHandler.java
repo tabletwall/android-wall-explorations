@@ -12,13 +12,14 @@ import com.pervasive.androidwall.client.view.TabletView;
 
 /**
  * Created by zherr on 3/20/14.
+ * A touch listener for objects in the tablet view
  */
-public class DefaultImageViewTouchHandler implements View.OnTouchListener{
+public class DefaultTabletViewTouchHandler implements View.OnTouchListener{
 
     private Context appContext;
     private TabletView tabletView;
 
-    public DefaultImageViewTouchHandler(Context appContext, TabletView tabletView) {
+    public DefaultTabletViewTouchHandler(Context appContext, TabletView tabletView) {
         this.appContext = appContext;
         this.tabletView = tabletView;
     }

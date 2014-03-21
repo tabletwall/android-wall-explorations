@@ -17,6 +17,7 @@ import com.pervasive.androidwall.client.view.TabletView;
 
 /**
  * Created by zherr on 3/20/14.
+ * @Note Unused class
  */
 public class DefaultTabletViewDraggable implements View.OnDragListener {
 

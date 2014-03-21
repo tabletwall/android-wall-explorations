@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 /**
  * Created by zherr on 3/19/14.
+ * @Note Unused class
  */
 public class DefaultImageViewDraggable implements View.OnDragListener{
 
