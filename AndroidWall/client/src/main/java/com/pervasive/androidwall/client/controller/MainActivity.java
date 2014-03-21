@@ -4,6 +4,7 @@ import android.graphics.Rect;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +31,7 @@ public class MainActivity extends ActionBarActivity {
 
         // Setup model
         DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+        Log.d("DISPLAY METRICS: ", displayMetrics.toString());
         defaultTabletRect = new Rect(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels);
         tablet = new CTablet(0, defaultTabletRect);
         // Plugin model to view

@@ -2,6 +2,7 @@ package com.pervasive.androidwall.client.controller;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +28,6 @@ public class DefaultTabletViewTouchHandler implements View.OnTouchListener{
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
 
-        RelativeLayout.LayoutParams layoutP = (RelativeLayout.LayoutParams) view.getLayoutParams();
-
         switch(motionEvent.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 break;
@@ -38,23 +37,25 @@ public class DefaultTabletViewTouchHandler implements View.OnTouchListener{
                 int x_cord = (int) motionEvent.getRawX();
                 int y_cord = (int) motionEvent.getRawY();
 
+                final int tVHeight = tabletView.getViewTabletHeight();
+                final int tVWidth = tabletView.getViewTabletWidth();
+
                 // Take care of hitting view boundary
-                if (x_cord > tabletView.getWidth() - view.getWidth()/2) {
-                    x_cord = tabletView.getWidth()- view.getWidth()/2;
+                if (x_cord > tVWidth - view.getWidth()/2) {
+                    x_cord = tVWidth- view.getWidth()/2;
                 }
                 if (x_cord < 0 + view.getWidth()/2) {
                     x_cord = 0 + view.getWidth()/2;
                 }
-                if (y_cord > tabletView.getHeight() - view.getHeight()/2 ) {
-                    y_cord = tabletView.getHeight() - view.getHeight()/2;
+                if (y_cord > tVHeight - view.getHeight()/2 ) {
+                    y_cord = tVHeight - view.getHeight()/2;
                 }
                 if (y_cord < 0 + view.getHeight()) {
                     y_cord = 0 + view.getHeight();
                 }
 
-                layoutP.leftMargin = x_cord - view.getWidth()/2;
-                layoutP.topMargin = y_cord - view.getHeight();
-                view.setLayoutParams(layoutP);
+                view.setX(x_cord - view.getWidth()/2);
+                view.setY(y_cord - view.getHeight());
                 break;
             default:
                 break;

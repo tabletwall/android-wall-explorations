@@ -54,6 +54,13 @@ public class TabletView extends View {
         this.tablet = tablet;
     }
 
+    public int getViewTabletWidth() {
+        return this.tablet.getScreenRectangle().width();
+    }
+
+    public int getViewTabletHeight() {
+        return this.tablet.getScreenRectangle().height();
+    }
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
