@@ -64,9 +64,6 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
         super.onActivityCreated(savedInstanceState);
     }
 
-    public DeviceDetailFragment() {
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -105,18 +102,28 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
                     }
                 });
 
-        mContentView.findViewById(R.id.btn_start_client).setOnClickListener(
+        mContentView.findViewById(R.id.btn_start).setOnClickListener(
                 new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
-                        // Allow user to pick an image from Gallery or other
-                        // registered apps
-                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                        intent.setType("image/*");
-                        startActivityForResult(intent, CHOOSE_FILE_RESULT_CODE);
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        startActivity(intent);
                     }
                 });
+        // TODO remove not used
+//        mContentView.findViewById(R.id.btn_start_client).setOnClickListener(
+//                new View.OnClickListener() {
+//
+//                    @Override
+//                    public void onClick(View v) {
+//                        // Allow user to pick an image from Gallery or other
+//                        // registered apps
+//                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//                        intent.setType("image/*");
+//                        startActivityForResult(intent, CHOOSE_FILE_RESULT_CODE);
+//                    }
+//                });
 
         return mContentView;
     }
@@ -157,18 +164,20 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
         view = (TextView) mContentView.findViewById(R.id.device_info);
         view.setText("Group Owner IP - " + info.groupOwnerAddress.getHostAddress());
 
+        mContentView.findViewById(R.id.btn_start).setVisibility(View.VISIBLE);
         // After the group negotiation, we assign the group owner as the file
         // server. The file server is single threaded, single connection server
-        // socket.
+        // socket. TODO - Here is where we want to decide responsibilities
         if (info.groupFormed && info.isGroupOwner) {
             new FileServerAsyncTask(getActivity(), mContentView.findViewById(R.id.status_text))
                     .execute();
         } else if (info.groupFormed) {
             // The other device acts as the client. In this case, we enable the
             // get file button.
-            mContentView.findViewById(R.id.btn_start_client).setVisibility(View.VISIBLE);
-            ((TextView) mContentView.findViewById(R.id.status_text)).setText(getResources()
-                    .getString(R.string.client_text));
+            // TODO remove
+//            mContentView.findViewById(R.id.btn_start_client).setVisibility(View.VISIBLE);
+//            ((TextView) mContentView.findViewById(R.id.status_text)).setText(getResources()
+//                    .getString(R.string.client_text));
         }
 
         // hide the connect button
@@ -203,7 +212,8 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
         view.setText(R.string.empty);
         view = (TextView) mContentView.findViewById(R.id.status_text);
         view.setText(R.string.empty);
-        mContentView.findViewById(R.id.btn_start_client).setVisibility(View.GONE);
+        // TODO remove
+//        mContentView.findViewById(R.id.btn_start_client).setVisibility(View.GONE);
         this.getView().setVisibility(View.GONE);
     }
 
@@ -261,7 +271,7 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
             if (result != null) {
                 statusText.setText("File copied - " + result);
                 Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
+                intent.setAction(android.content.Intent.ACTION_VIEW);
                 intent.setDataAndType(Uri.parse("file://" + result), "image/*");
                 context.startActivity(intent);
             }

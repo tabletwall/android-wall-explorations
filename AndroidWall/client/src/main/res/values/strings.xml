@@ -19,5 +19,6 @@
     <string name="group_owner_text">"Am I the Group Owner? "</string>
     <string name="label_me">ME</string>
     <string name="label_peers">PEERS</string>
+    <string name="start_main_activity">Start</string>
 
 </resources>

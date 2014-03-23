@@ -17,4 +17,22 @@
         android:src="@drawable/ic_launcher"
         android:contentDescription="@string/drag_drop"  />
 
+    <Button
+        android:id="@+id/advertise_btn"
+        android:layout_width="96dp"
+        android:layout_height="64dp"
+        android:onClick="clickAdvertise"
+        android:text="register"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/iv_logo"
+        android:layout_alignEnd="@+id/iv_logo" />
+
+    <Button
+        android:id="@+id/connect_btn"
+        android:layout_width="96dp"
+        android:layout_height="64dp"
+        android:onClick="clickConnect"
+        android:text="connect"
+        android:layout_alignTop="@+id/advertise_btn"
+        android:layout_toRightOf="@+id/advertise_btn" />
 </RelativeLayout>

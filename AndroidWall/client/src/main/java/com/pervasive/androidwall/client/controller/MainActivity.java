@@ -1,6 +1,9 @@
 package com.pervasive.androidwall.client.controller;
 
 import android.graphics.Rect;
+import android.net.nsd.NsdServiceInfo;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -12,6 +15,8 @@ import android.widget.ImageView;
 
 import com.pervasive.androidwall.client.R;
 import com.pervasive.androidwall.client.model.CTablet;
+import com.pervasive.androidwall.client.service.CoordinateConnection;
+import com.pervasive.androidwall.client.service.NsdHelper;
 import com.pervasive.androidwall.client.view.TabletView;
 
 
@@ -23,6 +28,10 @@ public class MainActivity extends ActionBarActivity {
 
     private View defaultImageView;
     private static final String IMAGEVIEW_TAG = "Android Logo";
+
+    private Handler coordHandler;
+    private CoordinateConnection coordinateConnection;
+    private NsdHelper nsdHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +51,26 @@ public class MainActivity extends ActionBarActivity {
         defaultImageView = (ImageView) findViewById(R.id.iv_logo);
         // Sets the tag
         defaultImageView.setTag(IMAGEVIEW_TAG);
+
+
+        // TODO need a way to distinguish own messages vs. peer messages
+        coordHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                String msgString = msg.getData().getString("msg");
+
+                String[] coordinates = msgString.split(",");
+                int x_sent = Integer.parseInt(coordinates[0]);
+                int y_sent = Integer.parseInt(coordinates[1]);
+
+                defaultImageView.setX(x_sent);
+                defaultImageView.setY(y_sent);
+            }
+        };
+
+        coordinateConnection = new CoordinateConnection(coordHandler);
+        nsdHelper = new NsdHelper(this);
+        nsdHelper.initializeNsd();
 
         // Hook up the listeners
         setListeners();
@@ -73,5 +102,52 @@ public class MainActivity extends ActionBarActivity {
 //        defaultImageView.setOnDragListener(new DefaultTabletViewDraggable(this));
 //        tabletView.setOnDragListener(new DefaultTabletViewDraggable(this));
         defaultImageView.setOnTouchListener(new DefaultTabletViewTouchHandler(this, tabletView));
+    }
+
+    public void clickAdvertise(View v) {
+        // Register service
+        if(coordinateConnection.getLocalPort() > -1) {
+            nsdHelper.registerService(coordinateConnection.getLocalPort());
+        } else {
+            Log.d("MainActivity", "ServerSocket isn't bound.");
+        }
+    }
+
+    public void clickConnect(View v) {
+        NsdServiceInfo service = nsdHelper.getChosenServiceInfo();
+        if (service != null) {
+            Log.d("MainActivity", "Connecting.");
+            coordinateConnection.connectToServer(service.getHost(),
+                    service.getPort());
+        } else {
+            Log.d("MainActivity", "No service to connect to!");
+        }
+    }
+
+    public CoordinateConnection getCoordinateConnection() {
+        return this.coordinateConnection;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        coordinateConnection.tearDown();
+        nsdHelper.tearDown();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (nsdHelper != null) {
+            nsdHelper.stopDiscovery();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (nsdHelper != null) {
+            nsdHelper.discoverServices();
+        }
     }
 }
