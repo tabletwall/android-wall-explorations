@@ -37,8 +37,8 @@ import java.util.concurrent.BlockingQueue;
 public class CoordinateConnection {
 
     private Handler mUpdateHandler;
-    private ChatServer mChatServer;
-    private ChatClient mChatClient;
+    private SimpleMessageServer mSimpleMessageServer;
+    private SimpleMessageClient mSimpleMessageClient;
 
     private static final String TAG = "ChatConnection";
 
@@ -47,21 +47,21 @@ public class CoordinateConnection {
 
     public CoordinateConnection(Handler handler) {
         mUpdateHandler = handler;
-        mChatServer = new ChatServer(handler);
+        mSimpleMessageServer = new SimpleMessageServer(handler);
     }
 
     public void tearDown() {
-        mChatServer.tearDown();
-        mChatClient.tearDown();
+        mSimpleMessageServer.tearDown();
+        mSimpleMessageClient.tearDown();
     }
 
     public void connectToServer(InetAddress address, int port) {
-        mChatClient = new ChatClient(address, port);
+        mSimpleMessageClient = new SimpleMessageClient(address, port);
     }
 
     public void sendMessage(String msg) {
-        if (mChatClient != null) {
-            mChatClient.sendMessage(msg);
+        if (mSimpleMessageClient != null) {
+            mSimpleMessageClient.sendMessage(msg);
         }
     }
     
@@ -114,11 +114,11 @@ public class CoordinateConnection {
         return mSocket;
     }
 
-    private class ChatServer {
+    private class SimpleMessageServer {
         ServerSocket mServerSocket = null;
         Thread mThread = null;
 
-        public ChatServer(Handler handler) {
+        public SimpleMessageServer(Handler handler) {
             mThread = new Thread(new ServerThread());
             mThread.start();
         }
@@ -147,7 +147,7 @@ public class CoordinateConnection {
                         Log.d(TAG, "ServerSocket Created, awaiting connection");
                         setSocket(mServerSocket.accept());
                         Log.d(TAG, "Connected.");
-                        if (mChatClient == null) {
+                        if (mSimpleMessageClient == null) {
                             int port = mSocket.getPort();
                             InetAddress address = mSocket.getInetAddress();
                             connectToServer(address, port);
@@ -161,19 +161,19 @@ public class CoordinateConnection {
         }
     }
 
-    private class ChatClient {
+    private class SimpleMessageClient {
 
         private InetAddress mAddress;
         private int PORT;
 
-        private final String CLIENT_TAG = "ChatClient";
+        private final String CLIENT_TAG = "SimpleMessageClient";
 
         private Thread mSendThread;
         private Thread mRecThread;
 
-        public ChatClient(InetAddress address, int port) {
+        public SimpleMessageClient(InetAddress address, int port) {
 
-            Log.d(CLIENT_TAG, "Creating chatClient");
+            Log.d(CLIENT_TAG, "Creating messageClient");
             this.mAddress = address;
             this.PORT = port;
 

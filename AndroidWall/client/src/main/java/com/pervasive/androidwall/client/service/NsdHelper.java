@@ -21,6 +21,12 @@ import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
 import android.util.Log;
 
+/**
+ * @see android.net.nsd.NsdManager
+ *
+ * Network Service Discovery helper
+ * "The Network Service Discovery Manager class provides the API to discover services on a network"
+ */
 public class NsdHelper {
 
     Context mContext;
