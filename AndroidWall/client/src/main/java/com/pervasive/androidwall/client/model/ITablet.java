@@ -11,13 +11,13 @@ public interface ITablet {
      * Sets the tablet's id
      * @param tabletId - The tablet id
      */
-    public void setTabletId(int tabletId);
+    public void setTabletId(String tabletId);
 
     /**
      * Gets the tablet's id
      * @return int - The tablet's id
      */
-    public int getTabletId();
+    public String getTabletId();
 
     /**
      * Sets the tablet's screen rectangle

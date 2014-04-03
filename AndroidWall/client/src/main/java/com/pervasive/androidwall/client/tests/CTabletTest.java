@@ -14,11 +14,11 @@ public class CTabletTest extends AndroidTestCase{
 
     @Override
     public void setUp() throws Exception {
-        tablet = new CTablet(0, new Rect(0, 0, 0, 0));
+        tablet = new CTablet("0", new Rect(0, 0, 0, 0));
     }
 
     public void testSetTabletId() throws Exception {
-        tablet.setTabletId(1);
+        tablet.setTabletId("1");
         assertEquals(1, tablet.getTabletId());
     }
 

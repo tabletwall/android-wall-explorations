@@ -7,24 +7,24 @@ import android.graphics.Rect;
  */
 public class CTablet implements ITablet {
 
-    private int tabletId;
+    private String tabletId;
     private Rect screenRectangle;
 
     public CTablet() {
     }
 
-    public CTablet(int tabletId, Rect screenRectangle) {
+    public CTablet(String tabletId, Rect screenRectangle) {
         this.tabletId = tabletId;
         this.screenRectangle = screenRectangle;
     }
 
     @Override
-    public void setTabletId(int tabletId) {
+    public void setTabletId(String tabletId) {
         this.tabletId = tabletId;
     }
 
     @Override
-    public int getTabletId() {
+    public String getTabletId() {
         return tabletId;
     }
 

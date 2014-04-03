@@ -20,11 +20,13 @@ public class DefaultTabletViewTouchHandler implements View.OnTouchListener{
     private Context appContext;
     private MainActivity mainActivity;
     private TabletView tabletView;
+    private String tabletMacId;
 
-    public DefaultTabletViewTouchHandler(Context appContext, TabletView tabletView) {
+    public DefaultTabletViewTouchHandler(Context appContext, TabletView tabletView, String tabletMacId) {
         this.appContext = appContext;
         this.tabletView = tabletView;
         this.mainActivity = (MainActivity) appContext;
+        this.tabletMacId = tabletMacId;
     }
 
     @Override
@@ -59,7 +61,7 @@ public class DefaultTabletViewTouchHandler implements View.OnTouchListener{
                 view.setX(x_cord - view.getWidth()/2);
                 view.setY(y_cord - view.getHeight());
 
-                String coordMsg = x_cord + "," + y_cord;
+                String coordMsg = tabletMacId + "," + x_cord + "," + y_cord;
                 mainActivity.getCoordinateConnection().sendMessage(coordMsg);
 
                 break;

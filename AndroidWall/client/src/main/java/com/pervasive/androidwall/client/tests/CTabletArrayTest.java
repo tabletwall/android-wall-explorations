@@ -20,7 +20,7 @@ public class CTabletArrayTest extends AndroidTestCase {
     @Override
     public void setUp() throws Exception {
         tabletArray = new CTabletArray(new ArrayList<ITablet>());
-        aTablet = new CTablet(0, new Rect(0, 0, 0, 0));
+        aTablet = new CTablet("0", new Rect(0, 0, 0, 0));
         tabletArray.addTablet(aTablet);
     }
 
@@ -35,17 +35,17 @@ public class CTabletArrayTest extends AndroidTestCase {
 
     public void testGetTabletById() throws Exception {
         CTablet temp = null;
-        temp = (CTablet) tabletArray.getTabletById(0);
+        temp = (CTablet) tabletArray.getTabletById("0");
         assertNotNull(temp);
     }
 
     public void testAddTablet() throws Exception {
-        tabletArray.addTablet(new CTablet(1, new Rect(1, 1, 1, 1)));
-        assertNotNull(tabletArray.getTabletById(1));
+        tabletArray.addTablet(new CTablet("1", new Rect(1, 1, 1, 1)));
+        assertNotNull(tabletArray.getTabletById("1"));
     }
 
     public void testRemoveTablet() throws Exception {
         tabletArray.removeTablet(aTablet);
-        assertNull(tabletArray.getTabletById(0));
+        assertNull(tabletArray.getTabletById("0"));
     }
 }

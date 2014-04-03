@@ -28,10 +28,10 @@ public class CTabletArray implements ITabletArray {
     }
 
     @Override
-    public ITablet getTabletById(int tabletId) {
+    public ITablet getTabletById(String tabletId) {
         ITablet tabletFound = null;
         for(ITablet t : tabletArray) {
-            if(t.getTabletId() == tabletId) {
+            if(t.getTabletId().equals(tabletId)) {
                 tabletFound = t;
                 break;
             }

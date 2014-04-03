@@ -8,10 +8,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.pervasive.androidwall.client.R;
 import com.pervasive.androidwall.client.model.CTablet;
@@ -25,9 +27,11 @@ public class MainActivity extends ActionBarActivity {
     private TabletView tabletView;
     private CTablet tablet;
     private Rect defaultTabletRect;
+    private int actionBarOffset;
 
     private View defaultImageView;
     private static final String IMAGEVIEW_TAG = "Android Logo";
+    private static final String TAG = "MainActivity";
 
     private Handler coordHandler;
     private CoordinateConnection coordinateConnection;
@@ -41,11 +45,23 @@ public class MainActivity extends ActionBarActivity {
         // Setup model
         DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
         Log.d("DISPLAY METRICS: ", displayMetrics.toString());
+
+        // Get drawable space
         defaultTabletRect = new Rect(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels);
-        tablet = new CTablet(0, defaultTabletRect);
+        String deviceMacAddress = NsdHelper.getMACAddress("wlan0");
+        Log.d(TAG, "Got MAC Address: " + deviceMacAddress);
+        tablet = new CTablet(deviceMacAddress, defaultTabletRect);
+
         // Plugin model to view
         tabletView = (TabletView) findViewById(R.id.tabletview);
         tabletView.setTablet(tablet);
+
+        // Calculate ActionBar height
+        TypedValue tv = new TypedValue();
+        if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true))
+        {
+            actionBarOffset = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
+        }
 
         // Note: to be changed later with other objects
         defaultImageView = (ImageView) findViewById(R.id.iv_logo);
@@ -60,11 +76,14 @@ public class MainActivity extends ActionBarActivity {
                 String msgString = msg.getData().getString("msg");
 
                 String[] coordinates = msgString.split(",");
-                int x_sent = Integer.parseInt(coordinates[0]);
-                int y_sent = Integer.parseInt(coordinates[1]);
+                final boolean isMyMessage = coordinates[0].equals(tablet.getTabletId());
+                if(!isMyMessage && coordinates.length == 3) {
+                    int x_sent = Integer.parseInt(coordinates[1]);
+                    int y_sent = Integer.parseInt(coordinates[2]);
 
-                defaultImageView.setX(x_sent);
-                defaultImageView.setY(y_sent);
+                    defaultImageView.setX(x_sent);
+                    defaultImageView.setY(y_sent - actionBarOffset);
+                }
             }
         };
 
@@ -101,7 +120,7 @@ public class MainActivity extends ActionBarActivity {
 //        defaultImageView.setOnDragListener(new DefaultImageViewDraggable(this));
 //        defaultImageView.setOnDragListener(new DefaultTabletViewDraggable(this));
 //        tabletView.setOnDragListener(new DefaultTabletViewDraggable(this));
-        defaultImageView.setOnTouchListener(new DefaultTabletViewTouchHandler(this, tabletView));
+        defaultImageView.setOnTouchListener(new DefaultTabletViewTouchHandler(this, tabletView, tablet.getTabletId()));
     }
 
     public void clickAdvertise(View v) {

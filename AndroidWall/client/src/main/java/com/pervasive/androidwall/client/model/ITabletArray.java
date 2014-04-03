@@ -24,7 +24,7 @@ public interface ITabletArray {
      * @param tabletId - The tablet Id
      * @return ITablet - null, or the ITablet found
      */
-    public ITablet getTabletById(int tabletId);
+    public ITablet getTabletById(String tabletId);
 
     /**
      * Adds a tablet to the tablet array
