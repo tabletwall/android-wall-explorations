@@ -174,10 +174,7 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
         } else if (info.groupFormed) {
             // The other device acts as the client. In this case, we enable the
             // get file button.
-            // TODO remove
-//            mContentView.findViewById(R.id.btn_start_client).setVisibility(View.VISIBLE);
-//            ((TextView) mContentView.findViewById(R.id.status_text)).setText(getResources()
-//                    .getString(R.string.client_text));
+            // TODO Explore this area of code, as this is where we may need to connect multiple clients
         }
 
         // hide the connect button
@@ -196,7 +193,6 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
         view.setText(device.deviceAddress);
         view = (TextView) mContentView.findViewById(R.id.device_info);
         view.setText(device.toString());
-
     }
 
     /**

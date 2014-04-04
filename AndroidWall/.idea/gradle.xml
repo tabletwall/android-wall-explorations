@@ -7,8 +7,8 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/client" />
+            <option value="C:\Users\Zach\git\android-wall\AndroidWall" />
+            <option value="C:\Users\Zach\git\android-wall\AndroidWall\client" />
           </set>
         </option>
       </GradleProjectSettings>
