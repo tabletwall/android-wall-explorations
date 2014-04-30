@@ -90,6 +90,13 @@ public class MainActivity extends ActionBarActivity {
         coordinateConnection = new CoordinateConnection(coordHandler);
         nsdHelper = new NsdHelper(this);
         nsdHelper.initializeNsd();
+        
+        // Register service
+        if(coordinateConnection.getLocalPort() > -1) {
+            nsdHelper.registerService(coordinateConnection.getLocalPort());
+        } else {
+            Log.d("MainActivity", "ServerSocket isn't bound.");
+        }
 
         // Hook up the listeners
         setListeners();
@@ -123,14 +130,6 @@ public class MainActivity extends ActionBarActivity {
         defaultImageView.setOnTouchListener(new DefaultTabletViewTouchHandler(this, tabletView, tablet.getTabletId()));
     }
 
-    public void clickAdvertise(View v) {
-        // Register service
-        if(coordinateConnection.getLocalPort() > -1) {
-            nsdHelper.registerService(coordinateConnection.getLocalPort());
-        } else {
-            Log.d("MainActivity", "ServerSocket isn't bound.");
-        }
-    }
 
     public void clickConnect(View v) {
         NsdServiceInfo service = nsdHelper.getChosenServiceInfo();
